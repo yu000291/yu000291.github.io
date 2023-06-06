@@ -12,112 +12,119 @@
     <header>
         <h1>Image Converter</h1>
     </header>
-
     <main>
         <section>
             <h2>Upload Image</h2>
             <input type="file" accept="image/*" id="image-upload" width="460" height="345">
             <button onclick="uploadImage()">Upload</button>
         </section>
-
+    
         <section>
             <h2>Original Image</h2>
             <div id="original-image-container">
                 <img id="original-image" src="#" alt="Original Image" width="460" height="345">
             </div>
         </section>
-
+    
         <section>
             <h2>Convert Image</h2>
             <button onclick="convertImage()">Convert to Black & White</button>
         </section>
-
+    
         <section>
             <h2>Converted Image</h2>
             <div id="converted-image-container">
                 <img id="converted-image" src="#" alt="Converted Image" width="460" height="345">
             </div>
         </section>
-
+    
         <section>
             <h2>Download Converted Image</h2>
             <button onclick="downloadImage()">Download</button>
         </section>
     </main>
-
+    
     <footer>
         <p>&copy; 2023 Image Converter. All rights reserved.</p>
     </footer>
-
+    
     <script>
-            var uploadedImage = null;
-            var convertedImage = null;
-
-            function uploadImage() {
+        var uploadedImage = null;
+        var convertedImage = null;
+    
+        function uploadImage() {
             var input = document.getElementById('image-upload');
             var reader = new FileReader();
-
+    
             reader.onload = function() {
                 uploadedImage = reader.result;
+            };
+    
+            reader.onloadend = function() {
                 displayImages();
             };
-
+    
             reader.readAsDataURL(input.files[0]);
-            }
-
-            function convertImage() {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-
-            var img = new Image();
-            img.onload = function() {
-                canvas.width = img.width;
-                canvas.height = img.height;
-
-                ctx.drawImage(img, 0, 0);
-
-                var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                var data = imageData.data;
-
-                for (var i = 0; i < data.length; i += 4) {
-                var r = data[i];
-                var g = data[i + 1];
-                var b = data[i + 2];
-                var brightness = (r + g + b) / 3;
-
-                data[i] = brightness;
-                data[i + 1] = brightness;
-                data[i + 2] = brightness;
-                }
-
-                ctx.putImageData(imageData, 0, 0);
-
-                convertedImage = canvas.toDataURL();
-                displayImages();
-            };
-
-            img.src = uploadedImage;
-            }
-
-            function displayImages() {
+        }
+    
+        function convertImage() {
             if (uploadedImage) {
-                var originalImage = document.getElementById('original-image');
-                originalImage.src = uploadedImage;
-
-                var convertedImage = document.getElementById('converted-image');
-                convertedImage.src = convertedImage;
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+    
+                var img = new Image();
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+    
+                    ctx.drawImage(img, 0, 0);
+    
+                    var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    var data = imageData.data;
+    
+                    for (var i = 0; i < data.length; i += 4) {
+                        var r = data[i];
+                        var g = data[i + 1];
+                        var b = data[i + 2];
+                        var brightness = (r + g + b) / 3;
+    
+                        data[i] = brightness;
+                        data[i + 1] = brightness;
+                        data[i + 2] = brightness;
+                    }
+    
+                    ctx.putImageData(imageData, 0, 0);
+    
+                    convertedImage = canvas.toDataURL();
+                    displayImages();
+                };
+    
+                img.src = uploadedImage;
             }
+        }
+    
+        function displayImages() {
+            var originalImage = document.getElementById('original-image');
+            originalImage.src = uploadedImage;
+    
+            var convertedImageElement = document.getElementById('converted-image');
+            if (convertedImage) {
+                convertedImageElement.src = convertedImage;
+                document.getElementById('converted-image-container').style.display = 'block';
+            } else {
+                convertedImageElement.src = '';
+                document.getElementById('converted-image-container').style.display = 'none';
             }
-
-            function downloadImage() {
+        }
+    
+        function downloadImage() {
             if (convertedImage) {
                 var link = document.createElement('a');
                 link.href = convertedImage;
                 link.download = 'Xinyue-Yu.png';
                 link.click();
             }
-            }
-
+        }
     </script>
 </body>
-</html>
+</html>    
