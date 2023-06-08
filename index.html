@@ -65,11 +65,7 @@
             reader.onload = function() {
                 uploadedImage = reader.result;
             };
-    
-            reader.onloadend = function() {
-                "displayImages();"
-                "so the photo will be showing when clicking upload."
-            };
+  
     
             reader.readAsDataURL(input.files[0]);
         }
