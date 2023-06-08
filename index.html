@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Converter</title>
     <style>
-        /* Add your CSS styles here */
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .image-container img {
+            width: 460px;
+            height: 345px;
+        }
     </style>
 </head>
 <body>
@@ -18,35 +26,34 @@
             <input type="file" accept="image/*" id="image-upload" width="460" height="345">
             <button onclick="uploadImage()">Upload</button>
         </section>
-    
-        <section>
-            <h2>Original Image</h2>
-            <div id="original-image-container">
-                <img id="original-image" src="#" alt="Original Image" width="460" height="345">
-            </div>
-        </section>
-    
+
         <section>
             <h2>Convert Image</h2>
             <button onclick="convertImage()">Convert to Black & White</button>
         </section>
-    
+
         <section>
-            <h2>Converted Image</h2>
-            <div id="converted-image-container">
-                <img id="converted-image" src="#" alt="Converted Image" width="460" height="345">
+            <h2>Images</h2>
+            <div class="image-container">
+                <div id="original-image-container">
+                    <h3>Original Image</h3>
+                    <img id="original-image" src="#" alt="Original Image">
+                </div>
+                <div id="converted-image-container">
+                    <h3>Converted Image</h3>
+                    <img id="converted-image" src="#" alt="Converted Image">
+                </div>
             </div>
         </section>
-    
+
+
+
         <section>
             <h2>Download Converted Image</h2>
             <button onclick="downloadImage()">Download</button>
         </section>
     </main>
     
-    <footer>
-        <p>&copy; 2023 Image Converter. All rights reserved.</p>
-    </footer>
     
     <script>
         var uploadedImage = null;
@@ -61,7 +68,8 @@
             };
     
             reader.onloadend = function() {
-                displayImages();
+                "displayImages();"
+                "so the photo will be showing when clicking upload."
             };
     
             reader.readAsDataURL(input.files[0]);
@@ -127,4 +135,4 @@
         }
     </script>
 </body>
-</html>    
+</html>   
